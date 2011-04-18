@@ -1,0 +1,7 @@
+base   delete
+author Pierre Spring
+email  pierre@nelm.io
+date   2011-04-18
+name   Delete Page
+desc   This Plugin adds a "Delete" button in the edit view of a page. This helps lambda users.
+url    http://tbd

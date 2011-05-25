@@ -1,12 +1,12 @@
 <?php
 
- 
+
 if(!defined('DOKU_INC')) die();
 if(!defined('DOKU_PLUGIN')) define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
 require_once DOKU_PLUGIN.'action.php';
- 
+
 class action_plugin_delete extends DokuWiki_Action_Plugin {
- 
+
     function getInfo()
     {
         return confToHash(dirname(__FILE__).'/plugin.info.txt');
@@ -17,15 +17,15 @@ class action_plugin_delete extends DokuWiki_Action_Plugin {
         $controller->register_hook('ACTION_ACT_PREPROCESS', 'BEFORE', $this, 'processAction');
         $controller->register_hook('TPL_METAHEADER_OUTPUT', 'BEFORE', $this, 'includeJs');
     }
- 
+
     public function addButton($event)
     {
         global $lang;
-        
+
         $form = $event->data;
 
         $position = $form->findElementById('edbtn__save') + 1;
-        
+
         $button = array ( '_elem' => 'button',
             'type' => 'submit',
             '_action' => 'delete',
@@ -35,11 +35,11 @@ class action_plugin_delete extends DokuWiki_Action_Plugin {
             'accesskey' => 'd',
             'title' => $lang['btn_delete'] . ' [D]'
         );
-        
+
         $form->insertElement($position, $button);
-        
+
     }
-    
+
     public function processAction($event)
     {
         global $ACT;
@@ -51,11 +51,17 @@ class action_plugin_delete extends DokuWiki_Action_Plugin {
 
         $TEXT = '';
         $ACT = 'save';
-        
+
     }
-    
+
     public function includeJs($event)
     {
+        global $ACT;
+        if($ACT !== "edit"){
+            return;
+
+        }
+
         $event->data['script'][] = array(
             'type'    => 'text/javascript',
             'charset' => 'utf-8',
